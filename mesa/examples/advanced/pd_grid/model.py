@@ -1,6 +1,6 @@
 import mesa
+from mesa.discrete_space import OrthogonalMooreGrid
 from mesa.examples.advanced.pd_grid.agents import PDAgent
-from mesa.experimental.cell_space import OrthogonalMooreGrid
 
 
 class PdGrid(mesa.Model):
@@ -32,11 +32,9 @@ class PdGrid(mesa.Model):
         if payoffs is not None:
             self.payoff = payoffs
 
-        # Create agents
-        for x in range(width):
-            for y in range(height):
-                agent = PDAgent(self)
-                agent.cell = self.grid[(x, y)]
+        PDAgent.create_agents(
+            self, len(self.grid.all_cells.cells), cell=self.grid.all_cells.cells
+        )
 
         self.datacollector = mesa.DataCollector(
             {

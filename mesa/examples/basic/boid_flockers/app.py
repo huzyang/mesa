@@ -1,14 +1,32 @@
+from matplotlib.markers import MarkerStyle
+
 from mesa.examples.basic.boid_flockers.model import BoidFlockers
-from mesa.visualization import Slider, SolaraViz, make_space_component
+from mesa.visualization import Slider, SolaraViz, SpaceRenderer
+from mesa.visualization.components import AgentPortrayalStyle
+
+# Pre-compute markers for different angles (e.g., every 10 degrees)
+MARKER_CACHE = {}
+for angle in range(0, 360, 10):
+    marker = MarkerStyle(10)
+    marker._transform = marker.get_transform().rotate_deg(angle)
+    MARKER_CACHE[angle] = marker
 
 
 def boid_draw(agent):
     neighbors = len(agent.neighbors)
 
-    if neighbors <= 1:
-        return {"color": "red", "size": 20}
-    elif neighbors >= 2:
-        return {"color": "green", "size": 20}
+    # Calculate the angle
+    deg = agent.angle
+    # Round to nearest 10 degrees
+    rounded_deg = round(deg / 10) * 10 % 360
+
+    # using cached markers to speed things up
+    boid_style = AgentPortrayalStyle(
+        color="red", size=20, marker=MARKER_CACHE[rounded_deg]
+    )
+    if neighbors >= 2:
+        boid_style.update(("color", "green"), ("marker", MARKER_CACHE[rounded_deg]))
+    return boid_style
 
 
 model_params = {
@@ -17,7 +35,7 @@ model_params = {
         "value": 42,
         "label": "Random Seed",
     },
-    "population": Slider(
+    "population_size": Slider(
         label="Number of boids",
         value=100,
         min=10,
@@ -51,9 +69,15 @@ model_params = {
 
 model = BoidFlockers()
 
+# Quickest way to visualize grid along with agents or property layers.
+renderer = SpaceRenderer(
+    model,
+    backend="matplotlib",
+).render(agent_portrayal=boid_draw)
+
 page = SolaraViz(
     model,
-    components=[make_space_component(agent_portrayal=boid_draw, backend="matplotlib")],
+    renderer,
     model_params=model_params,
     name="Boid Flocking Model",
 )

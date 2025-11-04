@@ -411,6 +411,18 @@ def test_agentset_agg():
     custom_avg_energy = agentset.agg("energy", custom_func)
     assert custom_avg_energy == 5.5
 
+    # Test with list of functions
+    min_max_energy = agentset.agg("energy", [min, max])
+    assert min_max_energy == [1, 10]
+
+    # Test with tuple of functions
+    min_energy, max_energy, total_energy = agentset.agg("energy", (min, max, sum))
+    assert [min_energy, max_energy, total_energy] == [1, 10, 55]
+
+    # Test with custom functions in a list
+    stats = agentset.agg("wealth", [min, max, np.mean, custom_func])
+    assert stats == [10, 100, 55.0, 55.0]
+
 
 def test_agentset_set_method():
     """Test AgentSet.set."""
@@ -500,9 +512,9 @@ def test_agentset_shuffle_do():
     original_order = list(agentset)
     shuffled_order = []
     agentset.shuffle_do(lambda agent: shuffled_order.append(agent))
-    assert (
-        original_order != shuffled_order
-    ), "The order should be different after shuffle_do"
+    assert original_order != shuffled_order, (
+        "The order should be different after shuffle_do"
+    )
 
     class AgentWithRemove(Agent):
         def __init__(self, model):

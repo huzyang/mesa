@@ -53,7 +53,7 @@ Learn the tools, talk to us about what you want to change, and open a small PR. 
 Awesome! You have the basics of open-source software development (if not check above), but not much modelling experience.
 
 First step is to start thinking like a modeller. To understand the fine details about our library and contribute meaningfully, get some modelling experience:
-- Go though our [Introductory Tutorial](https://mesa.readthedocs.io/latest/tutorials/intro_tutorial.html) and [Visualization Tutorial](https://mesa.readthedocs.io/latest/tutorials/visualization_tutorial.html). While going through them, dive into the source code to really see what everything does.
+- Go though our series of introductory tutorials at [Getting Started](https://mesa.readthedocs.io/latest/getting_started.html). While going through them, dive into the source code to really see what everything does.
 - Follow an ABM course (if possible). They might be a bit outdated programming language wise, but conceptual they're sound.
   - This MOOC on ABM concepts: [Agent Based Modeling](https://ocw.tudelft.nl/course-lectures/agent-based-modeling/)
   - This MOOC on practical ABM modelling: [Agent-Based Models with Python: An Introduction to Mesa](https://www.complexityexplorer.org/courses/172-agent-based-models-with-python-an-introduction-to-mesa)
@@ -112,14 +112,70 @@ pre-commit install
 You should no longer have to worry about code formatting. If still in doubt you may run the following command. If the command generates errors, fix all errors that are returned.
 
 ```bash
-ruff .
+ruff check . --fix
 ```
 
 ## Licensing
 
 The license of this project is located in [LICENSE].  By submitting a contribution to this project, you are agreeing that your contribution will be released under the terms of this license.
 
-## Maintainers
+## Roles in Mesa
+Mesa has several roles to help structure our collaboration and recognize great work. They also form a progression path for community members to that want to take on increasing responsibility in the project. Since we're all volunteers, everyone contributes what they can when they can - there are no minimum time commitments. Also, the best ideas and contributions can come from anyone, these roles are just a way to coordinate our efforts.
+
+Feel free to reach out to us anytime to discuss your interests and ambitions in the project. We're always happy to chat about how you can grow your involvement in Mesa!
+
+### Contributor
+Contributors help improve Mesa through:
+- Code contributions
+- Documentation improvements
+- Bug reports and fixes
+- Example models
+- Tutorial improvements
+- Answering questions
+- Participating in discussions
+- Testing pre-releases
+- Sharing Mesa with others
+
+Everyone can contribute what they can, when they can. No contribution is too small! Contributors who have a PR successfully merged receive the "Contributor" label on GitHub.
+
+### Collaborator
+When contributors consistently demonstrate technical skills and community mindset through their contributions, they may be invited to become collaborators. Collaborators help coordinate by:
+
+- Reviewing pull requests
+- Triaging issues and discussions
+- Coordinating between contributors
+- Leading specific areas of development
+- Helping new contributors
+- Participating in project planning
+- Building community
+
+The collaborator role recognizes people who help Mesa grow through both their technical contributions and community involvement. Collaborators receive GitHub triage permissions and the "Collaborator" label.
+
+### Maintainer
+Maintainers help guide Mesa's overall development while ensuring the project remains sustainable and welcoming. They focus on:
+- Project vision and roadmap
+- Major architectural decisions
+- Release management
+- Community governance
+- Mentoring collaborators
+- Setting community standards
+- Long-term sustainability
+
+Maintainers are selected based on their technical expertise, project understanding, and community leadership. Maintainers receive full repository permissions and the "Member" label.
+
+### Special Roles
+In some cases, special roles may be created for specific purposes, such as leading particular initiatives or components within Mesa. These roles are created as needed based on project requirements and may come with specific permissions and labels.
+
+All roles are expected to:
+- Follow Mesa's code of conduct
+- Communicate respectfully
+- Work collaboratively
+- Help maintain a welcoming community
+- Make decisions transparently
+
+Mesa grows through good ideas and contributions. We're all volunteers working together to make Mesa better. Don't hesitate to reach out to any maintainer to discuss your interests and potential growth within the project!
+
+## Maintainers' notes
 Some notes useful for Mesa maintainers.
 
 ### Releases
@@ -136,6 +192,8 @@ To create a new release, follow these steps:
 8. Once this PR is merged, return to the _Releases_ section and publish the draft release.
 9. The [`release.yml`](https://github.com/projectmesa/mesa/blob/main/.github/workflows/release.yml) CI workflow should automatically create and upload the package to PyPI. Verify this on [PyPI.org](https://pypi.org/project/mesa/).
 10. Finally, after release, open a new PR to update the version number in [`mesa/__init__.py`](https://github.com/projectmesa/mesa/blob/main/mesa/__init__.py) for the next release (e.g., `"3.1.0.dev"`).
+
+A recorded video of this process is [available here](https://youtu.be/JE44jkegmns).
 
 ## Special Thanks
 

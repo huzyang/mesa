@@ -15,23 +15,25 @@ like resource growth, pollution diffusion, or infrastructure networks. The cell
 space system is experimental and under active development.
 """
 
-from mesa.experimental.cell_space.cell import Cell
-from mesa.experimental.cell_space.cell_agent import (
+import warnings
+
+from mesa.discrete_space.cell import Cell
+from mesa.discrete_space.cell_agent import (
     CellAgent,
     FixedAgent,
     Grid2DMovingAgent,
 )
-from mesa.experimental.cell_space.cell_collection import CellCollection
-from mesa.experimental.cell_space.discrete_space import DiscreteSpace
-from mesa.experimental.cell_space.grid import (
+from mesa.discrete_space.cell_collection import CellCollection
+from mesa.discrete_space.discrete_space import DiscreteSpace
+from mesa.discrete_space.grid import (
     Grid,
     HexGrid,
     OrthogonalMooreGrid,
     OrthogonalVonNeumannGrid,
 )
-from mesa.experimental.cell_space.network import Network
-from mesa.experimental.cell_space.property_layer import PropertyLayer
-from mesa.experimental.cell_space.voronoi import VoronoiGrid
+from mesa.discrete_space.network import Network
+from mesa.discrete_space.property_layer import PropertyLayer
+from mesa.discrete_space.voronoi import VoronoiGrid
 
 __all__ = [
     "Cell",
@@ -48,3 +50,11 @@ __all__ = [
     "PropertyLayer",
     "VoronoiGrid",
 ]
+
+
+warnings.warn(
+    "you are importing from mesa.experimental.cell_space, "
+    "all cell spaces have been moved to mesa.discrete_space",
+    DeprecationWarning,
+    stacklevel=2,
+)

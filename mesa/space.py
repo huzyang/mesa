@@ -6,7 +6,7 @@ Objects used to add a spatial component to a model.
     All Grid classes (:class:`_Grid`, :class:`SingleGrid`, :class:`MultiGrid`,
     :class:`HexGrid`, etc.) are now in maintenance-only mode. While these classes remain
     fully supported, new development occurs in the experimental cell space module
-    (:mod:`mesa.experimental.cell_space`).
+    (:mod:`mesa.discrete_space`).
 
     The :class:`PropertyLayer` and :class:`ContinuousSpace` classes remain fully supported
     and actively developed.
@@ -61,7 +61,7 @@ MultiGridContent = list[Agent]
 F = TypeVar("F", bound=Callable[..., Any])
 
 
-def accept_tuple_argument(wrapped_function: F) -> F:
+def accept_tuple_argument[F: Callable[..., Any]](wrapped_function: F) -> F:
     """Decorator to allow grid methods that take a list of (x, y) coord tuples to also handle a single position.
 
     Tuples are wrapped in a single-item list rather than forcing user to do it.
@@ -607,8 +607,6 @@ class PropertyLayer:
 
     """
 
-    propertylayer_experimental_warning_given = False
-
     def __init__(
         self, name: str, width: int, height: int, default_value, dtype=np.float64
     ):
@@ -652,15 +650,6 @@ class PropertyLayer:
             )
 
         self.data = np.full((width, height), default_value, dtype=dtype)
-
-        if not self.__class__.propertylayer_experimental_warning_given:
-            warnings.warn(
-                "The new PropertyLayer and _PropertyGrid classes experimental. It may be changed or removed in any and all future releases, including patch releases.\n"
-                "We would love to hear what you think about this new feature. If you have any thoughts, share them with us here: https://github.com/projectmesa/mesa/discussions/1932",
-                FutureWarning,
-                stacklevel=2,
-            )
-            self.__class__.propertylayer_experimental_warning_given = True
 
     def set_cell(self, position: Coordinate, value):
         """Update a single cell's value in-place."""
@@ -1415,6 +1404,13 @@ class ContinuousSpace:
                             coordinates. i.e. if you are searching for the
                             neighbors of a given agent, True will include that
                             agent in the results.
+
+        Notes:
+            If 1 or more agents are located on pos, include_center=False will remove all these agents
+            from the results. So, if you really want to get the neighbors of a given agent,
+            you should set include_center=True, and then filter the list of agents to remove
+            the given agent (i.e., self when calling it from an agent).
+
         """
         if self._agent_points is None:
             self._build_agent_cache()
@@ -1575,7 +1571,10 @@ class NetworkGrid:
             )
             if not include_center:
                 del neighbors_with_distance[node_id]
-            neighborhood = sorted(neighbors_with_distance.keys())
+            neighbors_with_distance = sorted(
+                neighbors_with_distance.items(), key=lambda item: item[1]
+            )
+            neighborhood = [node_id for node_id, _ in neighbors_with_distance]
         return neighborhood
 
     def get_neighbors(

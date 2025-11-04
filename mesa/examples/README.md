@@ -1,13 +1,18 @@
-# Mesa core examples
-These examples are a collection of classic agent based models built using Mesa. These core examples are maintained by the Mesa team and are intended to demonstrate the capabilities of Mesa.
+# Mesa Core Examples
+This repository contains a curated set of classic agent-based models implemented using Mesa. These core examples are maintained by the Mesa development team and serve as both demonstrations of Mesa's capabilities and starting points for your own models.
 
-More user examples and showcases can be found in the [mesa-examples](https://github.com/projectmesa/mesa-examples) repository.
+## Overview
+The examples are categorized into two groups:
+1. **Basic Examples** - Simpler models that use only stable Mesa features; ideal for beginners
+2. **Advanced Examples** - More complex models that demonstrate additional concepts and may use some experimental features
+
+> **Note:** Looking for more examples? Visit the [mesa-examples](https://github.com/projectmesa/mesa-examples) repository for user-contributed models and showcases.
 
 ## Basic Examples
 The basic examples are relatively simple and only use stable Mesa features. They are good starting points for learning how to use Mesa.
 
 ### [Boltzmann Wealth Model](examples/basic/boltzmann_wealth_model)
-Completed code to go along with the [tutorial](https://mesa.readthedocs.io/latest/tutorials/intro_tutorial.html) on making a simple model of how a highly-skewed wealth distribution can emerge from simple rules.
+Completed code to go along with the [tutorial](https://mesa.readthedocs.io/latest/tutorials/0_first_model.html) on making a simple model of how a highly-skewed wealth distribution can emerge from simple rules.
 
 ### [Boids Flockers Model](examples/basic/boid_flockers)
 [Boids](https://en.wikipedia.org/wiki/Boids)-style flocking model, demonstrating the use of agents moving through a continuous space following direction vectors.

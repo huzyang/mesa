@@ -22,10 +22,9 @@ results = mesa.batch_run(
     iterations=5,
     max_steps=10,
     number_processes=1,
-    data_collection_period=1,
+    data_collection_period=-1,
     display_progress=True,
 )
-
 
 
 # Agent data
